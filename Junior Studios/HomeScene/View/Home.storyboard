@@ -90,6 +90,7 @@
                     <connections>
                         <outlet property="collectionView" destination="U5y-gE-ey5" id="uxV-AZ-hQY"/>
                         <outlet property="contentView" destination="3zD-jQ-ek3" id="ffI-K7-0vu"/>
+                        <outlet property="logoHeightConstraint" destination="49c-VM-6Oe" id="ZfS-eZ-XrP"/>
                         <outlet property="logoImage" destination="9bs-MA-ARr" id="qCA-ID-cQt"/>
                     </connections>
                 </viewController>
