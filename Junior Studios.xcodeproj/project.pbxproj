@@ -7,23 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3AA704A053397464F96E5484 /* Pods_Junior_Studios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EBD438042D87C1424E52CF /* Pods_Junior_Studios.framework */; };
+		CB1BB0F32623292D00C741A1 /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1BB0F22623292D00C741A1 /* AlbumModel.swift */; };
+		CB1BB0F926237D3100C741A1 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1BB0F826237D3100C741A1 /* AlbumViewController.swift */; };
+		CB1BB0FC26237D3B00C741A1 /* Album.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB1BB0FB26237D3B00C741A1 /* Album.storyboard */; };
+		CB1BB10326237E3B00C741A1 /* AlbumCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB1BB10126237E3B00C741A1 /* AlbumCollectionViewCell.xib */; };
+		CB1BB10426237E3B00C741A1 /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1BB10226237E3B00C741A1 /* AlbumCollectionViewCell.swift */; };
+		CB1BB10826238FB600C741A1 /* AlbumAssetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1BB10726238FB600C741A1 /* AlbumAssetModel.swift */; };
 		CB6893662622173B00A4C558 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6893652622173B00A4C558 /* AppDelegate.swift */; };
 		CB6893682622173B00A4C558 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6893672622173B00A4C558 /* SceneDelegate.swift */; };
-		CB68936A2622173B00A4C558 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6893692622173B00A4C558 /* ViewController.swift */; };
-		CB68936D2622173B00A4C558 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB68936B2622173B00A4C558 /* Main.storyboard */; };
 		CB68936F2622173C00A4C558 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB68936E2622173C00A4C558 /* Assets.xcassets */; };
 		CB6893722622173C00A4C558 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB6893702622173C00A4C558 /* LaunchScreen.storyboard */; };
+		CB6893802622212400A4C558 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB68937F2622212400A4C558 /* HomeViewController.swift */; };
+		CB6893842622213000A4C558 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB6893832622213000A4C558 /* Home.storyboard */; };
+		CB68938E26226AB000A4C558 /* GalleryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB68938C26226AB000A4C558 /* GalleryCollectionViewCell.xib */; };
+		CB68938F26226AB000A4C558 /* GalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB68938D26226AB000A4C558 /* GalleryCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		461EE64A2B961BDA2FAE8352 /* Pods-Junior Studios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Junior Studios.release.xcconfig"; path = "Target Support Files/Pods-Junior Studios/Pods-Junior Studios.release.xcconfig"; sourceTree = "<group>"; };
+		95FF460B5DA621DA7E84CCFB /* Pods-Junior Studios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Junior Studios.debug.xcconfig"; path = "Target Support Files/Pods-Junior Studios/Pods-Junior Studios.debug.xcconfig"; sourceTree = "<group>"; };
+		CB1BB0F22623292D00C741A1 /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
+		CB1BB0F826237D3100C741A1 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
+		CB1BB0FB26237D3B00C741A1 /* Album.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Album.storyboard; sourceTree = "<group>"; };
+		CB1BB10126237E3B00C741A1 /* AlbumCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumCollectionViewCell.xib; sourceTree = "<group>"; };
+		CB1BB10226237E3B00C741A1 /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
+		CB1BB10726238FB600C741A1 /* AlbumAssetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumAssetModel.swift; sourceTree = "<group>"; };
 		CB6893622622173B00A4C558 /* Junior Studios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Junior Studios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB6893652622173B00A4C558 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB6893672622173B00A4C558 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CB6893692622173B00A4C558 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		CB68936C2622173B00A4C558 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CB68936E2622173C00A4C558 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB6893712622173C00A4C558 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CB6893732622173C00A4C558 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CB68937F2622212400A4C558 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		CB6893832622213000A4C558 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		CB68938C26226AB000A4C558 /* GalleryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GalleryCollectionViewCell.xib; sourceTree = "<group>"; };
+		CB68938D26226AB000A4C558 /* GalleryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCollectionViewCell.swift; sourceTree = "<group>"; };
+		D9EBD438042D87C1424E52CF /* Pods_Junior_Studios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Junior_Studios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +51,74 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AA704A053397464F96E5484 /* Pods_Junior_Studios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		51283E5BD4EA4D0804886699 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				95FF460B5DA621DA7E84CCFB /* Pods-Junior Studios.debug.xcconfig */,
+				461EE64A2B961BDA2FAE8352 /* Pods-Junior Studios.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		CB1BB0F12623291B00C741A1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CB1BB0F22623292D00C741A1 /* AlbumModel.swift */,
+				CB1BB10726238FB600C741A1 /* AlbumAssetModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CB1BB0F626237CE200C741A1 /* AlbumScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB1BB0F726237D0600C741A1 /* View */,
+			);
+			path = AlbumScene;
+			sourceTree = "<group>";
+		};
+		CB1BB0F726237D0600C741A1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CB1BB0F826237D3100C741A1 /* AlbumViewController.swift */,
+				CB1BB0FB26237D3B00C741A1 /* Album.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CB1BB0FF26237DF500C741A1 /* GalleryCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CB68938C26226AB000A4C558 /* GalleryCollectionViewCell.xib */,
+				CB68938D26226AB000A4C558 /* GalleryCollectionViewCell.swift */,
+			);
+			path = GalleryCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		CB1BB10026237E0A00C741A1 /* AlbumCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CB1BB10126237E3B00C741A1 /* AlbumCollectionViewCell.xib */,
+				CB1BB10226237E3B00C741A1 /* AlbumCollectionViewCell.swift */,
+			);
+			path = AlbumCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		CB6893592622173B00A4C558 = {
 			isa = PBXGroup;
 			children = (
 				CB6893642622173B00A4C558 /* Junior Studios */,
 				CB6893632622173B00A4C558 /* Products */,
+				51283E5BD4EA4D0804886699 /* Pods */,
+				F829AC84185E3FCC859D7E8B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +133,51 @@
 		CB6893642622173B00A4C558 /* Junior Studios */ = {
 			isa = PBXGroup;
 			children = (
+				CB1BB0F626237CE200C741A1 /* AlbumScene */,
+				CB68937D262220F300A4C558 /* HomeScene */,
+				CB1BB0F12623291B00C741A1 /* Model */,
+				CB68938A26226A6E00A4C558 /* CustomCells */,
 				CB6893652622173B00A4C558 /* AppDelegate.swift */,
 				CB6893672622173B00A4C558 /* SceneDelegate.swift */,
-				CB6893692622173B00A4C558 /* ViewController.swift */,
-				CB68936B2622173B00A4C558 /* Main.storyboard */,
 				CB68936E2622173C00A4C558 /* Assets.xcassets */,
 				CB6893702622173C00A4C558 /* LaunchScreen.storyboard */,
 				CB6893732622173C00A4C558 /* Info.plist */,
 			);
 			path = "Junior Studios";
+			sourceTree = "<group>";
+		};
+		CB68937D262220F300A4C558 /* HomeScene */ = {
+			isa = PBXGroup;
+			children = (
+				CB68937E2622210700A4C558 /* View */,
+			);
+			path = HomeScene;
+			sourceTree = "<group>";
+		};
+		CB68937E2622210700A4C558 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CB68937F2622212400A4C558 /* HomeViewController.swift */,
+				CB6893832622213000A4C558 /* Home.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CB68938A26226A6E00A4C558 /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				CB1BB10026237E0A00C741A1 /* AlbumCollectionViewCell */,
+				CB1BB0FF26237DF500C741A1 /* GalleryCollectionViewCell */,
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
+		F829AC84185E3FCC859D7E8B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9EBD438042D87C1424E52CF /* Pods_Junior_Studios.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,6 +187,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CB6893762622173C00A4C558 /* Build configuration list for PBXNativeTarget "Junior Studios" */;
 			buildPhases = (
+				9F3E228435C9F93FD11B5C13 /* [CP] Check Pods Manifest.lock */,
 				CB68935E2622173B00A4C558 /* Sources */,
 				CB68935F2622173B00A4C558 /* Frameworks */,
 				CB6893602622173B00A4C558 /* Resources */,
@@ -124,36 +238,61 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB6893842622213000A4C558 /* Home.storyboard in Resources */,
+				CB68938E26226AB000A4C558 /* GalleryCollectionViewCell.xib in Resources */,
 				CB6893722622173C00A4C558 /* LaunchScreen.storyboard in Resources */,
 				CB68936F2622173C00A4C558 /* Assets.xcassets in Resources */,
-				CB68936D2622173B00A4C558 /* Main.storyboard in Resources */,
+				CB1BB10326237E3B00C741A1 /* AlbumCollectionViewCell.xib in Resources */,
+				CB1BB0FC26237D3B00C741A1 /* Album.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9F3E228435C9F93FD11B5C13 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Junior Studios-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CB68935E2622173B00A4C558 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB68936A2622173B00A4C558 /* ViewController.swift in Sources */,
+				CB1BB0F926237D3100C741A1 /* AlbumViewController.swift in Sources */,
 				CB6893662622173B00A4C558 /* AppDelegate.swift in Sources */,
+				CB1BB10826238FB600C741A1 /* AlbumAssetModel.swift in Sources */,
+				CB1BB0F32623292D00C741A1 /* AlbumModel.swift in Sources */,
+				CB68938F26226AB000A4C558 /* GalleryCollectionViewCell.swift in Sources */,
 				CB6893682622173B00A4C558 /* SceneDelegate.swift in Sources */,
+				CB6893802622212400A4C558 /* HomeViewController.swift in Sources */,
+				CB1BB10426237E3B00C741A1 /* AlbumCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		CB68936B2622173B00A4C558 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CB68936C2622173B00A4C558 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		CB6893702622173C00A4C558 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -216,7 +355,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -271,7 +410,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -283,6 +422,7 @@
 		};
 		CB6893772622173C00A4C558 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95FF460B5DA621DA7E84CCFB /* Pods-Junior Studios.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -302,6 +442,7 @@
 		};
 		CB6893782622173C00A4C558 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 461EE64A2B961BDA2FAE8352 /* Pods-Junior Studios.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

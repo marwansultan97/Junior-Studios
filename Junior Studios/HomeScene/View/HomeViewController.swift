@@ -8,6 +8,7 @@
 import UIKit
 import Photos
 
+
 class HomeViewController: UIViewController {
 
     @IBOutlet weak var logoHeightConstraint: NSLayoutConstraint!
@@ -49,8 +50,6 @@ class HomeViewController: UIViewController {
                 
         smartAlbums.enumerateObjects { (collection, index, UnsafeMutablePointer) in
 
-
-
             let fetchOptions = PHFetchOptions()
             let descriptor = NSSortDescriptor(key: "creationDate", ascending: false)
             fetchOptions.sortDescriptors = [descriptor]
@@ -58,7 +57,7 @@ class HomeViewController: UIViewController {
             let fetchResult = PHAsset.fetchAssets(in: collection, options: fetchOptions)
             guard let assest = fetchResult.firstObject else { return }
             let requestOptions = PHImageRequestOptions()
-            requestOptions.deliveryMode = .fastFormat
+            requestOptions.deliveryMode = .highQualityFormat
             requestOptions.resizeMode = .exact
             requestOptions.isSynchronous = true
             let size = CGSize(width: UIScreen.main.bounds.width / 2 - 10, height: UIScreen.main.bounds.width / 2 - 10)
@@ -72,8 +71,6 @@ class HomeViewController: UIViewController {
         
         userAlbums.enumerateObjects { (collection, index, UnsafeMutablePointer) in
             
-            
-            
             let fetchOptions = PHFetchOptions()
             let descriptor = NSSortDescriptor(key: "creationDate", ascending: false)
             fetchOptions.sortDescriptors = [descriptor]
@@ -81,7 +78,7 @@ class HomeViewController: UIViewController {
             let fetchResult = PHAsset.fetchAssets(in: collection, options: fetchOptions)
             guard let assest = fetchResult.firstObject else { return }
             let requestOptions = PHImageRequestOptions()
-            requestOptions.deliveryMode = .fastFormat
+            requestOptions.deliveryMode = .highQualityFormat
             requestOptions.resizeMode = .exact
             requestOptions.isSynchronous = true
             let size = CGSize(width: UIScreen.main.bounds.width / 2 - 10, height: UIScreen.main.bounds.width / 2 - 10)
@@ -90,7 +87,6 @@ class HomeViewController: UIViewController {
                 let album = AlbumModel(name: collection.localizedTitle!, collection: collection, image: image)
                 self.albumModels.append(album)
             }
-            
             
         }
 
@@ -147,10 +143,7 @@ class HomeViewController: UIViewController {
         
     }
     
-    
-    
-    
-    
+
 
 }
 
@@ -168,6 +161,18 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.folderNameLabel.text = album.name
         cell.itemsNoLabel.text = "\(album.count!)"
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        guard !albumModels.isEmpty else { return }
+        let album = albumModels[indexPath.row]
+
+        let vc = UIStoryboard(name: "Album", bundle: nil).instantiateInitialViewController() as! AlbumViewController
+        vc.album = album
+        vc.title = album.name
+        navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     
