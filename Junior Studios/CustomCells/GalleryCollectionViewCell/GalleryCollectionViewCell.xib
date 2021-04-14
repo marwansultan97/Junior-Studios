@@ -18,17 +18,31 @@
                 <rect key="frame" x="0.0" y="0.0" width="120" height="170"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZZB-h7-OD8">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j0a-n5-g0f">
                         <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
-                    </imageView>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZZB-h7-OD8">
+                                <rect key="frame" x="10" y="10" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="EO9-eM-0YG"/>
+                                    <constraint firstAttribute="height" constant="100" id="dtt-yJ-Qgu"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ZZB-h7-OD8" firstAttribute="centerY" secondItem="j0a-n5-g0f" secondAttribute="centerY" id="6xa-z0-fqb"/>
+                            <constraint firstItem="ZZB-h7-OD8" firstAttribute="centerX" secondItem="j0a-n5-g0f" secondAttribute="centerX" id="gun-3d-T01"/>
+                        </constraints>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5kp-Kr-eCQ">
-                        <rect key="frame" x="60" y="127" width="0.0" height="0.0"/>
+                        <rect key="frame" x="60" y="125" width="0.0" height="0.0"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMw-6U-lzM">
-                        <rect key="frame" x="60" y="122" width="0.0" height="0.0"/>
+                        <rect key="frame" x="60" y="120" width="0.0" height="0.0"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                         <color key="textColor" red="0.035294117647058823" green="0.14509803921568626" blue="0.16862745098039217" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -36,20 +50,23 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="ZZB-h7-OD8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="3hH-rj-ktb"/>
-                <constraint firstAttribute="trailing" secondItem="ZZB-h7-OD8" secondAttribute="trailing" id="Jac-Wb-cLC"/>
-                <constraint firstItem="fMw-6U-lzM" firstAttribute="top" secondItem="ZZB-h7-OD8" secondAttribute="bottom" constant="2" id="PXw-Rg-bqF"/>
                 <constraint firstItem="5kp-Kr-eCQ" firstAttribute="top" secondItem="fMw-6U-lzM" secondAttribute="bottom" constant="5" id="Rtx-aQ-BXK"/>
+                <constraint firstItem="j0a-n5-g0f" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Z76-VJ-eJb"/>
+                <constraint firstAttribute="trailing" secondItem="j0a-n5-g0f" secondAttribute="trailing" id="aLR-mG-mgH"/>
+                <constraint firstItem="j0a-n5-g0f" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="cQB-ol-fO3"/>
                 <constraint firstItem="fMw-6U-lzM" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="fjW-4X-g5U"/>
-                <constraint firstItem="ZZB-h7-OD8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="sG0-lm-d68"/>
-                <constraint firstAttribute="bottom" secondItem="ZZB-h7-OD8" secondAttribute="bottom" constant="50" id="vWp-dU-KDa"/>
+                <constraint firstAttribute="bottom" secondItem="j0a-n5-g0f" secondAttribute="bottom" constant="50" id="n3u-2B-GtD"/>
+                <constraint firstItem="fMw-6U-lzM" firstAttribute="top" secondItem="j0a-n5-g0f" secondAttribute="bottom" id="waT-wL-i47"/>
                 <constraint firstItem="5kp-Kr-eCQ" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="xr6-2g-q3N"/>
             </constraints>
             <size key="customSize" width="120" height="172"/>
             <connections>
                 <outlet property="folderImageView" destination="ZZB-h7-OD8" id="jqb-Rk-YFK"/>
                 <outlet property="folderNameLabel" destination="fMw-6U-lzM" id="W4n-nH-No4"/>
+                <outlet property="imageHeight" destination="dtt-yJ-Qgu" id="eBb-Nn-TAf"/>
+                <outlet property="imageWidth" destination="EO9-eM-0YG" id="wcl-cU-CfY"/>
                 <outlet property="itemsNoLabel" destination="5kp-Kr-eCQ" id="sgz-a8-4Pm"/>
             </connections>
             <point key="canvasLocation" x="59.420289855072468" y="110.49107142857143"/>
@@ -58,6 +75,9 @@
     <resources>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

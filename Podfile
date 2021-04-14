@@ -5,7 +5,9 @@ target 'Junior Studios' do
   
   use_frameworks! :linkage => :static
 
-  pod 'VerticalCardSwiper'
+  pod 'AnimatedCollectionViewLayout'
+  pod 'RxCocoa'
+  pod 'RxSwift'
 
 
 end

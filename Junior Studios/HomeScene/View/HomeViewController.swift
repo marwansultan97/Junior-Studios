@@ -6,25 +6,30 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 import Photos
 
 
 class HomeViewController: UIViewController {
 
-    @IBOutlet weak var logoHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var logoImage: UIImageView!
+
     @IBOutlet weak var collectionView: UICollectionView!
     
-    private var albumModels = [AlbumModel]()
+    
     private let cellIdentifier = "GalleryCollectionViewCell"
+    private let logoCellIdentifier = "LogoCollectionViewCell"
+    
+    private let bag = DisposeBag()
+    private var viewModel = HomeViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 	
-        configureUI()
         configureCollectionView()
+        viewModelBinding()
         requestPHAuthorization()
+        
 
     }
     
@@ -32,95 +37,48 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isHidden = true
+        self.navigationController?.setStatusBar(backgroundColor: UIColor(rgb: 0x09252B))
     }
     
     func requestPHAuthorization() {
         PHPhotoLibrary.requestAuthorization { (authStatus) in
             switch authStatus {
-            case .authorized: self.fetchCollections()
-            default: self.showNoAccessAlert()
+            case .authorized:
+                self.viewModel.fetchCameraRollCollection()
+                self.viewModel.fetchUserCreatedCollections()
+            default:
+                self.showNoAccessAlert()
             }
         }
     }
     
-    func fetchCollections() {
+    private func viewModelBinding() {
+        viewModel.assetCollectionsBehavior
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.collectionView.reloadData()
+            }).disposed(by: bag)
         
-        let userAlbums = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumRegular, options: nil)
-        let smartAlbums = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil)
-                
-        smartAlbums.enumerateObjects { (collection, index, UnsafeMutablePointer) in
-
-            let fetchOptions = PHFetchOptions()
-            let descriptor = NSSortDescriptor(key: "creationDate", ascending: false)
-            fetchOptions.sortDescriptors = [descriptor]
-            
-            let fetchResult = PHAsset.fetchAssets(in: collection, options: fetchOptions)
-            guard let assest = fetchResult.firstObject else { return }
-            let requestOptions = PHImageRequestOptions()
-            requestOptions.deliveryMode = .highQualityFormat
-            requestOptions.resizeMode = .exact
-            requestOptions.isSynchronous = true
-            let size = CGSize(width: UIScreen.main.bounds.width / 2 - 10, height: UIScreen.main.bounds.width / 2 - 10)
-            PHImageManager.default().requestImage(for: assest, targetSize: size, contentMode: .aspectFill, options: requestOptions) { (image, info) in
-                guard let image = image else { return }
-                let album = AlbumModel(name: collection.localizedTitle!, collection: collection, image: image)
-                self.albumModels.append(album)
-            }
-
-        }
+        viewModel.imagesNumberBehavior
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.collectionView.reloadData()
+            }).disposed(by: bag)
         
-        userAlbums.enumerateObjects { (collection, index, UnsafeMutablePointer) in
-            
-            let fetchOptions = PHFetchOptions()
-            let descriptor = NSSortDescriptor(key: "creationDate", ascending: false)
-            fetchOptions.sortDescriptors = [descriptor]
-            
-            let fetchResult = PHAsset.fetchAssets(in: collection, options: fetchOptions)
-            guard let assest = fetchResult.firstObject else { return }
-            let requestOptions = PHImageRequestOptions()
-            requestOptions.deliveryMode = .highQualityFormat
-            requestOptions.resizeMode = .exact
-            requestOptions.isSynchronous = true
-            let size = CGSize(width: UIScreen.main.bounds.width / 2 - 10, height: UIScreen.main.bounds.width / 2 - 10)
-            PHImageManager.default().requestImage(for: assest, targetSize: size, contentMode: .aspectFill, options: requestOptions) { (image, info) in
-                guard let image = image else { return }
-                let album = AlbumModel(name: collection.localizedTitle!, collection: collection, image: image)
-                self.albumModels.append(album)
-            }
-            
-        }
-
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
+        viewModel.videosNumberBehavior
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.collectionView.reloadData()
+            }).disposed(by: bag)
+        
     }
 
-
-    func configureUI() {
-        let smallCornerRadius = view.frame.width * 0.18
-        let bigCornerRadius = view.frame.width * 0.268
-        
-        logoHeightConstraint.constant = view.frame.height / 3.5
-        logoImage.clipsToBounds = true
-        logoImage.layer.cornerRadius = bigCornerRadius
-        logoImage.layer.maskedCorners = [.layerMaxXMaxYCorner]
-        
-        contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = smallCornerRadius
-        contentView.layer.maskedCorners = [.layerMinXMinYCorner]
-    }
     
     func configureCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: view.frame.width / 2 - 10, height: view.frame.width / 2 + 40)
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-        layout.scrollDirection = .vertical
-        collectionView.setCollectionViewLayout(layout, animated: true)
         collectionView.register(UINib(nibName: cellIdentifier, bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
+        collectionView.register(UINib(nibName: logoCellIdentifier, bundle: nil), forCellWithReuseIdentifier: logoCellIdentifier )
     }
     
     private func showNoAccessAlert() {
@@ -128,9 +86,7 @@ class HomeViewController: UIViewController {
                                       message: "Please grant Junior-Studios Photo Access in Settings -> Privacy",
                                       preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-            
-        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         alert.addAction(UIAlertAction(title: "Access", style: .default, handler: { _ in
             if let url = URL(string: UIApplication.openSettingsURLString) {
@@ -147,26 +103,38 @@ class HomeViewController: UIViewController {
 
 }
 
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return albumModels.count
+        return section == 0 ? 1 : viewModel.assetCollectionsBehavior.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GalleryCollectionViewCell
-        guard !albumModels.isEmpty else { return UICollectionViewCell() }
-        let album = albumModels[indexPath.row]
-        cell.folderImageView.image = album.thumbnailImage
-        cell.folderNameLabel.text = album.name
-        cell.itemsNoLabel.text = "\(album.count!)"
-        return cell
+        if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: logoCellIdentifier, for: indexPath) as! LogoCollectionViewCell
+            cell.photosNumberLabel.text = viewModel.imagesNumberBehavior.value > 0 ? "\(viewModel.imagesNumberBehavior.value) Items" : "\(viewModel.imagesNumberBehavior.value) Item"
+            cell.videosNumberLabel.text = viewModel.videosNumberBehavior.value > 0 ? "\(viewModel.videosNumberBehavior.value) Items" : "\(viewModel.videosNumberBehavior.value) Item"
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GalleryCollectionViewCell
+            guard !viewModel.assetCollectionsBehavior.value.isEmpty else { return cell }
+            let album = viewModel.assetCollectionsBehavior.value[indexPath.row]
+            cell.folderImageView.image = album.thumbnailImage
+            cell.folderNameLabel.text = album.name
+            cell.itemsNoLabel.text = "\(album.count!) Items"
+            return cell
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        guard !albumModels.isEmpty else { return }
-        let album = albumModels[indexPath.row]
+        guard !viewModel.assetCollectionsBehavior.value.isEmpty, indexPath.section != 0 else { return }
+        let album = viewModel.assetCollectionsBehavior.value[indexPath.row]
 
         let vc = UIStoryboard(name: "Album", bundle: nil).instantiateInitialViewController() as! AlbumViewController
         vc.album = album
@@ -175,6 +143,41 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        } else {
+            return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        } else {
+            return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.section == 0 {
+            return CGSize(width: view.frame.width, height: UIScreen.main.bounds.height / 2.5)
+        } else {
+            return CGSize(width: view.frame.width / 2 - 10, height: view.frame.width / 2 + 40)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if section == 0 {
+            return .zero
+        } else {
+            return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        }
+    }
+    
+   
+    
     
     
 }
+
