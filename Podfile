@@ -8,8 +8,7 @@ target 'Junior Studios' do
   pod 'AnimatedCollectionViewLayout'
   pod 'RxCocoa'
   pod 'RxSwift'
-
-
+  pod "Player"
 end
 
 

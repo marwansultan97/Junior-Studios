@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,23 +21,72 @@
                     <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="CZt-3a-M7J">
                         <rect key="frame" x="0.0" y="0.0" width="205" height="180"/>
                     </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SF_play" translatesAutoresizingMaskIntoConstraints="NO" id="e6P-22-roP">
+                        <rect key="frame" x="95" y="82.5" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="Zl4-Q7-EJu"/>
+                            <constraint firstAttribute="height" constant="15" id="lUK-1M-nsM"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fpC-YS-Res">
+                        <rect key="frame" x="0.0" y="0.0" width="205" height="180"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnZ-yg-PGX">
+                                <rect key="frame" x="30" y="150" width="145" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Qi-bH-Mx4">
+                                        <rect key="frame" x="65.5" y="15" width="14" height="15"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="12"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="0hQ-AL-YdF"/>
+                                    <constraint firstAttribute="bottom" secondItem="8Qi-bH-Mx4" secondAttribute="bottom" id="kGC-yJ-snD"/>
+                                    <constraint firstItem="8Qi-bH-Mx4" firstAttribute="centerX" secondItem="qnZ-yg-PGX" secondAttribute="centerX" id="vWP-aV-vHG"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="qnZ-yg-PGX" secondAttribute="trailing" constant="30" id="1GJ-2u-Vhj"/>
+                            <constraint firstAttribute="bottom" secondItem="qnZ-yg-PGX" secondAttribute="bottom" id="HR0-Ch-Qap"/>
+                            <constraint firstItem="qnZ-yg-PGX" firstAttribute="leading" secondItem="fpC-YS-Res" secondAttribute="leading" constant="30" id="XOw-u3-SxK"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="fpC-YS-Res" secondAttribute="bottom" id="CPC-UF-enG"/>
                 <constraint firstItem="CZt-3a-M7J" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="DHJ-HI-Lq9"/>
                 <constraint firstAttribute="trailing" secondItem="CZt-3a-M7J" secondAttribute="trailing" id="LfG-WP-vKf"/>
                 <constraint firstItem="CZt-3a-M7J" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ObO-g1-umT"/>
+                <constraint firstItem="e6P-22-roP" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="OlX-4c-q7c"/>
+                <constraint firstItem="fpC-YS-Res" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="TMy-tt-llt"/>
+                <constraint firstItem="fpC-YS-Res" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Wug-33-HgK"/>
+                <constraint firstItem="e6P-22-roP" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="bMh-DK-yir"/>
                 <constraint firstAttribute="bottom" secondItem="CZt-3a-M7J" secondAttribute="bottom" id="dUC-Z5-ljQ"/>
+                <constraint firstAttribute="trailing" secondItem="fpC-YS-Res" secondAttribute="trailing" id="sR9-Yx-ReY"/>
             </constraints>
             <size key="customSize" width="205" height="180"/>
             <connections>
                 <outlet property="photoImageView" destination="CZt-3a-M7J" id="Z4y-g5-sJA"/>
+                <outlet property="playImageView" destination="e6P-22-roP" id="8QF-N3-LU3"/>
+                <outlet property="playerView" destination="fpC-YS-Res" id="DTa-Ls-IB5"/>
+                <outlet property="progressView" destination="qnZ-yg-PGX" id="Isx-Hh-ut9"/>
+                <outlet property="timeProgressLabel" destination="8Qi-bH-Mx4" id="gXm-JM-Iib"/>
             </connections>
             <point key="canvasLocation" x="121.0144927536232" y="87.723214285714278"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="SF_play" width="44" height="44"/>
         <image name="logo" width="1000" height="766"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

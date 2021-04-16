@@ -7,7 +7,11 @@
 
 import UIKit
 import Photos
+import AVFoundation
+import AVKit
 import AnimatedCollectionViewLayout
+import RxSwift
+import RxCocoa
 
 class AlbumDetailedViewController: UIViewController {
 
@@ -15,6 +19,7 @@ class AlbumDetailedViewController: UIViewController {
     @IBOutlet weak var bCollectionView: UICollectionView!
     
     private let cellIdentifier = "AlbumCollectionViewCell"
+    private let bag = DisposeBag()
     
     var assetModels = [AlbumAssetModel]()
     
@@ -35,9 +40,11 @@ class AlbumDetailedViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        bCollectionView.scrollToItem(at: IndexPath(item: index!, section: 0), at: .right, animated: true)
-        sCollectionView.scrollToItem(at: IndexPath(item: index!, section: 0), at: .right, animated: true)
+        bCollectionView.scrollToItem(at: IndexPath(item: index!, section: 0), at: .right, animated: false)
+//        sCollectionView.scrollToItem(at: IndexPath(item: index!, section: 0), at: .right, animated: false)
+        bCollectionView.reloadData()
     }
+
     
     
     func configureCollectionViews() {
@@ -64,18 +71,38 @@ class AlbumDetailedViewController: UIViewController {
 
 }
 
-extension AlbumDetailedViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+//MARK: - CollectionView Delegate, DataSource
+extension AlbumDetailedViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return assetModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! AlbumCollectionViewCell
-        guard !assetModels.isEmpty else { return cell }
-        let asset = assetModels[indexPath.row]
-        cell.photoImageView.image = asset.image
-        return cell
+        if collectionView == sCollectionView {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! AlbumCollectionViewCell
+            guard !assetModels.isEmpty else { return cell }
+            let asset = assetModels[indexPath.row]
+            cell.playerView.alpha = 0
+            cell.photoImageView.image = asset.image
+            cell.playImageView.alpha = asset.mediaType == .image ? 0 : 1
+            return cell
+            
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! AlbumCollectionViewCell
+            guard !assetModels.isEmpty else { return cell }
+            let asset = assetModels[indexPath.row]
+            if asset.mediaType == .image {
+                cell.setupImageCell(image: asset.image!)
+            } else {
+                cell.setupVideoCell(url: asset.avURL!.url)
+            }
+            cell.playImageView.alpha = 0
+            
+            return cell
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -83,6 +110,30 @@ extension AlbumDetailedViewController: UICollectionViewDelegate, UICollectionVie
             bCollectionView.scrollToItem(at: indexPath, at: .right, animated: true)
         }
     }
+ 
+    
+}
+
+//MARK: - CollectionView Delegate
+extension AlbumDetailedViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == bCollectionView {
+            let convertedPoint = view.convert(CGPoint(x: view.frame.width / 2, y: 300), to: bCollectionView)
+            centerIndex = bCollectionView.indexPathForItem(at: convertedPoint)?.item ?? centerIndex
+            self.sCollectionView.reloadData()
+            if centerIndex < assetModels.count - 8 {
+                let point = CGPoint(x: CGFloat(centerIndex) * sCollectionView.frame.width / 10 , y: 0)
+                sCollectionView.setContentOffset(point, animated: true)
+            }
+        }
+    }
+    
+    
+}
+
+//MARK: - CollectionView DelegateFlowLayout
+extension AlbumDetailedViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if collectionView == bCollectionView {
@@ -113,24 +164,5 @@ extension AlbumDetailedViewController: UICollectionViewDelegate, UICollectionVie
         }
         
     }
-    
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == bCollectionView {
-            
-            let convertedPoint = view.convert(CGPoint(x: view.frame.width / 2, y: 300), to: bCollectionView)
-            centerIndex = bCollectionView.indexPathForItem(at: convertedPoint)?.item ?? centerIndex
-            self.sCollectionView.reloadData()
-            
-            
-            if centerIndex < assetModels.count - 8 {
-                let point = CGPoint(x: CGFloat(centerIndex) * sCollectionView.frame.width / 10 , y: 0)
-                sCollectionView.setContentOffset(point, animated: true)
-            }
-            
-        }
-        
-    }
-    
-    
 }
+

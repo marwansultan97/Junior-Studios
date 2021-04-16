@@ -7,6 +7,8 @@
 
 import UIKit
 import Photos
+import RxSwift
+import RxCocoa
 import AnimatedCollectionViewLayout
 
 class AlbumViewController: UIViewController {
@@ -23,22 +25,19 @@ class AlbumViewController: UIViewController {
     var minimumLineSpacing: CGFloat = 5
     
     var album: AlbumModel?
-    var albumAssets = [AlbumAssetModel]() {
-        didSet {
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
-    }
+    
+    private let bag = DisposeBag()
+    private lazy var viewModel: AlbumViewModel = {
+        return AlbumViewModel(album: album!)
+    }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configureCollectionView()
-        fetchImages()
         
-        collectionView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(pinchAction(sender:))))
+        viewModelBinding()
+        configureCollectionView()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,8 +58,6 @@ class AlbumViewController: UIViewController {
                     self.layout.minimumLineSpacing = self.minimumLineSpacing
                     self.view.layoutIfNeeded()
                 }
-
-
             } else if scale < 0.5 {
                 guard zoomNumber > 0 else { return }
                 zoomNumber -= 1
@@ -74,70 +71,25 @@ class AlbumViewController: UIViewController {
             } else {
                 break
             }
-
         default:
             break
         }
-
-
     }
     
-    
-    func fetchImages() {
-        guard let assetCollection = album?.collection else { return }
-        let fetchOptions = PHFetchOptions()
-        let descriptor = NSSortDescriptor(key: "creationDate", ascending: false)
-        fetchOptions.sortDescriptors = [descriptor]
-        
-        let fetchResult = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
-        
-        
-        fetchResult.enumerateObjects { (phAsset, index, UnsafeMutablePointer) in
-            let requestOptions = PHImageRequestOptions()
-            requestOptions.deliveryMode = .highQualityFormat
-            requestOptions.resizeMode = .exact
-            requestOptions.isSynchronous = false
-            requestOptions.version = .original
-            let maxDimension = UIScreen.main.bounds.height * UIScreen.main.scale
-            let size = CGSize(width: maxDimension, height: maxDimension)
-            
-            
-            if phAsset.mediaType == .image {
-                PHImageManager.default().requestImage(for: phAsset, targetSize: size, contentMode: .default, options: requestOptions) { (image, info) in
-                    guard let image = image else { return }
-                    let asset = AlbumAssetModel(isFavorite: phAsset.isFavorite,
-                                                creationDate: phAsset.creationDate ?? Date(),
-                                                mediaType: phAsset.mediaType,
-                                                image: image,
-                                                avURL: nil)
-                    self.albumAssets.append(asset)
+    func viewModelBinding() {
+        viewModel.albumAssetsBehavior
+            .subscribe(onNext: { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
                 }
-            } else if phAsset.mediaType == .video {
-                PHImageManager.default().requestImage(for: phAsset, targetSize: size, contentMode: .default, options: requestOptions) { (image, info) in
-                    guard let image = image else { return }
-                    
-                    let videoOptions = PHVideoRequestOptions()
-                    videoOptions.deliveryMode = .highQualityFormat
-                    videoOptions.isNetworkAccessAllowed = false
-                    PHImageManager.default().requestAVAsset(forVideo: phAsset, options: videoOptions) { (avAsset, avAudioMix, info) in
-                        if let assetURL = avAsset as? AVURLAsset {
-                            let asset = AlbumAssetModel(isFavorite: phAsset.isFavorite,
-                                                        creationDate: phAsset.creationDate ?? Date(),
-                                                        mediaType: phAsset.mediaType,
-                                                        image: image,
-                                                        avURL: assetURL)
-                            self.albumAssets.append(asset)
-                        }
-                    }
-                    
-                }
-            }
-        }
+            }).disposed(by: bag)
         
+        viewModel.fetchAssets()
     }
-
     
     func configureCollectionView() {
+        collectionView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(pinchAction(sender:))))
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         
@@ -157,13 +109,13 @@ class AlbumViewController: UIViewController {
 extension AlbumViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return albumAssets.count
+        return viewModel.albumAssetsBehavior.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! AlbumsCollectionViewCell
-        guard !albumAssets.isEmpty else { return cell }
-        let asset = albumAssets[indexPath.row]
+        guard !viewModel.albumAssetsBehavior.value.isEmpty else { return cell }
+        let asset = viewModel.albumAssetsBehavior.value[indexPath.row]
         cell.playImageView.alpha = asset.mediaType == .image ? 0 : 1
         cell.photoImageView.image = asset.image
         return cell
@@ -174,10 +126,17 @@ extension AlbumViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = UIStoryboard(name: "AlbumDetailed", bundle: nil).instantiateInitialViewController() as! AlbumDetailedViewController
-        vc.assetModels = albumAssets
-        vc.index = indexPath.row
-        navigationController?.pushViewController(vc, animated: true)
+        let asset = viewModel.albumAssetsBehavior.value[indexPath.row]
+        if asset.mediaType == .image {
+            let vc = UIStoryboard(name: "PhotoDetails", bundle: nil).instantiateInitialViewController() as! PhotoDetailsViewController
+            vc.asset = asset
+            vc.title = "Image"
+            navigationController?.pushViewController(vc, animated: true)
+        }
+//        let vc = UIStoryboard(name: "AlbumDetailed", bundle: nil).instantiateInitialViewController() as! AlbumDetailedViewController
+//        vc.assetModels = viewModel.albumAssetsBehavior.value
+//        vc.index = indexPath.row
+//        navigationController?.pushViewController(vc, animated: true)
     }
     
     

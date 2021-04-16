@@ -34,8 +34,6 @@ class HomeViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isHidden = true
         self.navigationController?.setStatusBar(backgroundColor: UIColor(rgb: 0x09252B))
     }
