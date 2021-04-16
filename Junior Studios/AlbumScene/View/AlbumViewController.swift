@@ -132,6 +132,11 @@ extension AlbumViewController: UICollectionViewDelegate, UICollectionViewDataSou
             vc.asset = asset
             vc.title = "Image"
             navigationController?.pushViewController(vc, animated: true)
+        } else if asset.mediaType == .video {
+            let vc = UIStoryboard(name: "VideoDetails", bundle: nil).instantiateInitialViewController() as! VideoDetailsViewController
+            vc.url = asset.avURL?.url
+            vc.title = "Video"
+            navigationController?.pushViewController(vc, animated: true)
         }
 //        let vc = UIStoryboard(name: "AlbumDetailed", bundle: nil).instantiateInitialViewController() as! AlbumDetailedViewController
 //        vc.assetModels = viewModel.albumAssetsBehavior.value
